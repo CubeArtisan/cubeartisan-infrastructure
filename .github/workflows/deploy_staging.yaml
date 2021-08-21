@@ -1,0 +1,58 @@
+name: Deploy to Staging
+on:
+  repository_dispatch:
+env:
+  PROJECT_ID: ${{ secrets.GKE_PROJECT }}
+  GKE_CLUSTER: cubeartisan    # Add your cluster name here.
+  GKE_ZONE: us-central1-c   # Add your cluster zone here.
+  DEPLOYMENT_NAME: cubeartisan # Add your deployment name here.
+jobs:
+  deploy:
+    name: Deploy to GKE
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Get Tag Name
+        run: echo "TAG=${{ github.event.client_payload.tag }}" >> $GITHUB_ENV
+      - name: Get Repository Owner
+        run: echo "REPOSITORY=`echo "ghcr.io/${{ github.event.client_payload.repository }}" | tr "[:upper:]" "[:lower:]"`" >> $GITHUB_ENV
+      - name: Show tag and repo
+        run: 'echo "REPOSITORY: $REPOSITORY" && echo "TAG: $TAG"'
+      # Setup gcloud CLI
+      - name: Set up gcloud Cloud SDK environment
+        uses: google-github-actions/setup-gcloud@v0.2.0
+        with:
+          service_account_key: ${{ secrets.GKE_SA_KEY }}
+          project_id: ${{ secrets.GKE_PROJECT }}
+      # Get the GKE credentials so we can deploy to the cluster
+      - uses: google-github-actions/get-gke-credentials@fb08709ba27618c31c09e014e1d8364b02e5042e
+        with:
+          cluster_name: ${{ env.GKE_CLUSTER }}
+          location: ${{ env.GKE_ZONE }}
+          credentials: ${{ secrets.GKE_SA_KEY }}
+      # Set up kustomize
+      - name: Set up Kustomize
+        run: |-
+          curl -sfLo kustomize https://github.com/kubernetes-sigs/kustomize/releases/download/v3.1.0/kustomize_3.1.0_linux_amd64
+          chmod u+x ${GITHUB_WORKSPACE}/kustomize
+      - name: Update Image Tag and Version
+        run: |-
+          cd ${GITHUB_WORKSPACE}/staging
+          ${GITHUB_WORKSPACE}/kustomize edit set image "$REPOSITORY/cubeartisan:$TAG"
+          ${GITHUB_WORKSPACE}/kustomize edit set image "$REPOSITORY/cubeartisan-jobs:$TAG"
+          kubectl create configmap cubeartisan-version -n cubeartisan-staging --from-literal TAG=$TAG -o yaml --dry-run=client > 44-cubeartisan-version.kube.yaml
+      - name: Commit Changes
+        uses: EndBug/add-and-commit@v7
+          with:
+            default_author: github_actions
+      # Deploy the Docker image to the GKE cluster
+      - name: Deploy
+        run: |-
+          cd ${GITHUB_WORKSPACE}
+          kubectl replace -f 44-cubeartisan-version.kube.yaml || kubectl apply -f 44-cubeartisan-version.kube.yaml
+          ${GITHUB_WORKSPACE}/kustomize build staging | kubectl apply -f -
+      - name: Check Deployment
+        run: |-
+          kubectl rollout status -n cubeartisan-staging deployment/$DEPLOYMENT_NAME --timeout=600s
+          kubectl get -n cubeartisan-staging services -o wide
