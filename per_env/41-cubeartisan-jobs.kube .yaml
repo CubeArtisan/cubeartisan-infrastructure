@@ -1,0 +1,209 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  labels:
+    name: cubeartisan-maintenance
+  name: cubeartisan-maintenance
+spec:
+  schedule: "0 10 * * *"
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            name: cubeartisan-maintenance
+        spec:
+          containers:
+            - name: cubeartisan
+              image: "ghcr.io/cubeartisan/cubeartisan:latest"
+              imagePullPolicy: Always
+              command:
+                - yarn
+                - maintenance
+              env:
+                - name: DISCORD_URL
+                  value: "https://discord.gg/NKCaZRFU"
+                - name: DOWNTIME_ACTIVE
+                  value: "false"
+                - name: ELASTIC_APM_ACTIVE
+                  value: 'false'
+                - name: ELASTIC_APM_CLOUD_PROVIDER
+                  value: none
+                - name: ELASTIC_APM_ENVIRONMENT
+                  value: "<ENV>"
+                - name: ELASTIC_APM_SERVER_URL
+                  value: "http://apm.kube-logging.svc:8200/"
+                - name: ELASTIC_APM_SERVICE_NAME
+                  value: CubeArtisan
+                - name: ELASTIC_APM_SERVICE_VERSION
+                  valueFrom:
+                    configMapKeyRef:
+                      name: cubeartisan-version
+                      key: TAG
+                - name: ELASTIC_APM_TRANSACTION_IGNORE_URLS
+                  value: "/socket*"
+                - name: ELASTICSEARCH_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: cubeartisansecrets
+                      key: ELASTICSEARCH_PASSWORD
+                - name: ELASTICSEARCH_URL
+                  value: "https://elasticsearch-es-http.kube-logging.svc:9200/"
+                - name: ELASTICSEARCH_USER
+                  valueFrom:
+                    secretKeyRef:
+                      name: cubeartisansecrets
+                      key: ELASTICSEARCH_USER
+                - name: FLASKROOT
+                  value: "http://cubeartisan-recommender"
+                - name: MONGODB_DBNAME
+                  value: "cubeartisan"
+                - name: MONGODB_HOST
+                  value: "mongo-svc"
+                - name: MONGODB_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: mongodb-password
+                      key: password
+                - name: MONGODB_PORT
+                  value: "27017"
+                - name: MONGODB_REPLICASET
+                  value: mongo
+                - name: MONGODB_USER
+                  value: cubeartisan
+                - name: NODE_ENV
+                  value: "production"
+                - name: SITE_HOSTNAME
+                  value: <ENV>
+                - name: SITE_NAME
+                  value: CubeArtisan
+                - name: SITE_ROOT
+                  value: https://<ENV>
+                - name: SITE_VERSION
+                  valueFrom:
+                    configMapKeyRef:
+                      name: cubeartisan-version
+                      key: TAG
+                - name: SOURCE_REPO
+                  value: https://github.com/CubeArtisan/cubeartisan
+                - name: SUPPORT_EMAIL
+                  value: support@cubeartisan.net
+                - name: SUPPORT_EMAIL_FROM
+                  value: CubeArtisan Support Team <support@cubeartisan.net>
+              resources:
+                limits:
+                  memory: 8Gi
+                  cpu: 1.5
+                  ephemeral-storage: 4Gi
+                requests:
+                  memory: 8Gi
+                  cpu: 1
+                  ephemeral-storage: 4Gi
+          restartPolicy: Always
+          imagePullSecrets:
+            - name: github-docker
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  labels:
+    name: cubeartisan-export
+  name: cubeartisan-export
+spec:
+  schedule: "0 12 * * 1"
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            name: cubeartisan-maintenance
+        spec:
+          containers:
+            - name: cubeartisan
+              image: "ghcr.io/cubeartisan/cubeartisan:latest"
+              imagePullPolicy: Always
+              command:
+                - yarn
+                - export
+              env:
+                - name: DISCORD_URL
+                  value: "https://discord.gg/NKCaZRFU"
+                - name: DOWNTIME_ACTIVE
+                  value: "false"
+                - name: ELASTIC_APM_ACTIVE
+                  value: 'false'
+                - name: ELASTIC_APM_CLOUD_PROVIDER
+                  value: none
+                - name: ELASTIC_APM_ENVIRONMENT
+                  value: "<ENV>"
+                - name: ELASTIC_APM_SERVER_URL
+                  value: "http://apm.kube-logging.svc:8200/"
+                - name: ELASTIC_APM_SERVICE_NAME
+                  value: CubeArtisan
+                - name: ELASTIC_APM_SERVICE_VERSION
+                  valueFrom:
+                    configMapKeyRef:
+                      name: cubeartisan-version
+                      key: TAG
+                - name: ELASTIC_APM_TRANSACTION_IGNORE_URLS
+                  value: "/socket*"
+                - name: ELASTICSEARCH_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: cubeartisansecrets
+                      key: ELASTICSEARCH_PASSWORD
+                - name: ELASTICSEARCH_URL
+                  value: "https://elasticsearch-es-http.kube-logging.svc:9200/"
+                - name: ELASTICSEARCH_USER
+                  valueFrom:
+                    secretKeyRef:
+                      name: cubeartisansecrets
+                      key: ELASTICSEARCH_USER
+                - name: FLASKROOT
+                  value: "http://cubeartisan-recommender"
+                - name: MONGODB_DBNAME
+                  value: "cubeartisan"
+                - name: MONGODB_HOST
+                  value: "mongo-svc"
+                - name: MONGODB_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: mongodb-password
+                      key: password
+                - name: MONGODB_PORT
+                  value: "27017"
+                - name: MONGODB_REPLICASET
+                  value: mongo
+                - name: MONGODB_USER
+                  value: cubeartisan
+                - name: NODE_ENV
+                  value: "production"
+                - name: SITE_HOSTNAME
+                  value: <ENV>
+                - name: SITE_NAME
+                  value: CubeArtisan
+                - name: SITE_ROOT
+                  value: https://<ENV>
+                - name: SITE_VERSION
+                  valueFrom:
+                    configMapKeyRef:
+                      name: cubeartisan-version
+                      key: TAG
+                - name: SOURCE_REPO
+                  value: https://github.com/CubeArtisan/cubeartisan
+                - name: SUPPORT_EMAIL
+                  value: support@cubeartisan.net
+                - name: SUPPORT_EMAIL_FROM
+                  value: CubeArtisan Support Team <support@cubeartisan.net>
+              resources:
+                limits:
+                  memory: 8Gi
+                  cpu: 1.5
+                  ephemeral-storage: 32Gi
+                requests:
+                  memory: 8Gi
+                  cpu: 1
+                  ephemeral-storage: 32Gi
+          restartPolicy: Always
+          imagePullSecrets:
+            - name: github-docker

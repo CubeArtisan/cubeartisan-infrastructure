@@ -53,8 +53,6 @@ spec:
                 secretKeyRef:
                   name: cubeartisansecrets
                   key: ELASTIC_APM_SECRET_TOKEN
-            - name: ELASTIC_APM_TRANSACTION_IGNORE_URLS
-              value: ""
             - name: ELASTIC_APM_SERVER_URL
               value: "http://apm.kube-logging.svc:8200/"
             - name: ELASTIC_APM_SERVICE_NAME

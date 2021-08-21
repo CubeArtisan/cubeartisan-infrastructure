@@ -45,8 +45,9 @@ jobs:
           kubectl create configmap cubeartisan-version -n cubeartisan-staging --from-literal TAG=$TAG -o yaml --dry-run=client > 44-cubeartisan-version.kube.yaml
       - name: Commit Changes
         uses: EndBug/add-and-commit@v7
-          with:
-            default_author: github_actions
+        with:
+          message: 'Update staging deployment.'
+          default_author: github_actions
       # Deploy the Docker image to the GKE cluster
       - name: Deploy
         run: |-

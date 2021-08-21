@@ -3,4 +3,5 @@ kind: Kustomization
 resources:
   - 22-mongodb.kube.yaml
   - 40-cubeartisan.kube.yaml
+  - 41-cubeartisan-jobs.kube.yaml
   - 52-cubeartisan-ingress.kube.yaml
