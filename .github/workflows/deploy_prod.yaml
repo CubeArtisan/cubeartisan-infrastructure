@@ -10,13 +10,14 @@ jobs:
   deploy:
     name: Deploy to GKE
     runs-on: ubuntu-latest
+    if: github.event.action == 'deploy_prod'
     steps:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Get Tag Name
         run: echo "TAG=${{ github.event.client_payload.tag }}" >> $GITHUB_ENV
       - name: Get Repository Owner
-        run: echo "REPOSITORY=`echo "ghcr.io/${{ github.event.client_payload.repository }}" | tr "[:upper:]" "[:lower:]"`" >> $GITHUB_ENV
+        run: echo "REPOSITORY=${{ github.event.client_payload.repository }}" >> $GITHUB_ENV
       - name: Show tag and repo
         run: 'echo "REPOSITORY: $REPOSITORY" && echo "TAG: $TAG"'
       # Setup gcloud CLI
