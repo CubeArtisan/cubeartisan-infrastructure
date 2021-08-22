@@ -1,0 +1,68 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    service: cube-recommender
+  name: cube-recommender
+spec:
+  ports:
+  - name: http
+    port: 80
+    targetPort: 8000
+  selector:
+    service: cube-recommender
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    service: cube-recommender
+  name: cube-recommender
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      service: cube-recommender
+  template:
+    metadata:
+      labels:
+        service: cube-recommender
+    spec:
+      containers:
+        - name: cube-recommender
+          image: ghcr.io/cubeartisan/cubecobrarecommender:20210822
+          env
+          ports:
+            - containerPort: 8000
+              name: http
+          imagePullPolicy: Always
+          resources:
+            limits:
+              memory: 4Gi
+              cpu: 2
+            requests:
+              memory: 4Gi
+              cpu: 1
+          livenessProbe:
+            httpGet:
+              path: /version
+              port: http
+            failureThreshold: 1
+            periodSeconds: 60
+          readinessProbe:
+            httpGet:
+              path: /version
+              port: http
+            initialDelaySeconds: 180
+            periodSeconds: 60
+          startupProbe:
+            httpGet:
+              path: /version
+              port: http
+            failureThreshold: 15
+            periodSeconds: 60
+      restartPolicy: Always
+      imagePullSecrets:
+        - name: github-docker

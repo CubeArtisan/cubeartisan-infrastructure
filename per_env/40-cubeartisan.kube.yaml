@@ -87,7 +87,7 @@ spec:
                   name: cubeartisansecrets
                   key: EMAIL_CONFIG_USERNAME
             - name: FLASKROOT
-              value: "http://cubeartisan-recommender"
+              value: "http://cube-recommender"
             - name: LISTEN_ADDR
               value: "0.0.0.0"
             - name: MONGODB_DBNAME
