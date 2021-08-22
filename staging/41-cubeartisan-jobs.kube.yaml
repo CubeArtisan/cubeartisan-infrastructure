@@ -101,6 +101,7 @@ spec:
                   ephemeral-storage: 4Gi
               volumeMounts:
                 - mountPath: /CubeArtisan/server/private
+                  name: carddatabase
           restartPolicy: Never
           imagePullSecrets:
             - name: github-docker
