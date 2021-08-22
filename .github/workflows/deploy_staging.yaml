@@ -1,6 +1,8 @@
 name: Deploy to Staging
 on:
   repository_dispatch:
+    types:
+      - deploy_staging
 env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
   GKE_CLUSTER: cubeartisan    # Add your cluster name here.
@@ -10,7 +12,6 @@ jobs:
   deploy:
     name: Deploy to GKE
     runs-on: ubuntu-latest
-    if: github.event.action == 'deploy_staging'
     steps:
       - name: Checkout
         uses: actions/checkout@v2
