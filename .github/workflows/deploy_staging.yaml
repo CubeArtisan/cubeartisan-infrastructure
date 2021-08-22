@@ -62,9 +62,7 @@ jobs:
         with:
           message: 'Update staging deployment.'
           default_author: github_actions
-          add:
-            - staging/44-cubeartisan-version.kube.yaml
-            - staging/kustomization.yaml
+          add: 'staging/44-cubeartisan-version.kube.yaml staging/kustomization.yaml'
       # Deploy the Docker image to the GKE cluster
       - name: Deploy
         run: |-
