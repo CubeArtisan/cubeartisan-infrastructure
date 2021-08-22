@@ -3,8 +3,17 @@ on:
   repository_dispatch:
     types:
       - deploy_staging
+    workflow_dispatch:
+      inputs:
+        tag:
+          description: 'Tag for the docker image.'
+          required: true
+        repository:
+          description: 'Repository with the docker image.'
+          required: true
+          default: 'ghcr.io/cubeartisan'
 env:
-  PROJECT_ID: ${{ secrets.GKE_PROJECT }}
+  PROJECT_ID: cubeartisan
   GKE_CLUSTER: cubeartisan    # Add your cluster name here.
   GKE_ZONE: us-central1-c   # Add your cluster zone here.
   DEPLOYMENT_NAME: cubeartisan # Add your deployment name here.
@@ -15,25 +24,29 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Get Tag Name
-        run: echo "TAG=${{ github.event.client_payload.tag }}" >> $GITHUB_ENV
-      - name: Get Repository Owner
-        run: echo "REPOSITORY=${{ github.event.client_payload.repository }}" >> $GITHUB_ENV
+      - name: Get Tag and Repository Owner from Workflow Dispatch
+        if: ${{ github.event_name == 'workflow_dispatch' }}
+        run: |
+          echo "TAG=${{ github.event.inputs.tag }}" >> $GITHUB_ENV
+          echo "REPOSITORY=${{ github.event.inputs.repository }}" >> $GITHUB_ENV
+      - name: Get Tag and Repository Owner from Repository Dispatch
+        if: ${{ github.event_name == 'repository_dispatch' }}
+        run: |
+          echo "TAG=${{ github.event.client_payload.tag }}" >> $GITHUB_ENV
+          echo "REPOSITORY=${{ github.event.client_payload.repository }}" >> $GITHUB_ENV
       - name: Show tag and repo
         run: 'echo "REPOSITORY: $REPOSITORY" && echo "TAG: $TAG"'
-      # Setup gcloud CLI
       - name: Set up gcloud Cloud SDK environment
         uses: google-github-actions/setup-gcloud@v0.2.0
         with:
           service_account_key: ${{ secrets.GKE_SA_KEY }}
-          project_id: ${{ secrets.GKE_PROJECT }}
-      # Get the GKE credentials so we can deploy to the cluster
-      - uses: google-github-actions/get-gke-credentials@fb08709ba27618c31c09e014e1d8364b02e5042e
+          project_id: ${{ env.PROJECT_ID }}
+      - name: Get the GKE credentials for Deployment
+        uses: google-github-actions/get-gke-credentials@fb08709ba27618c31c09e014e1d8364b02e5042e
         with:
           cluster_name: ${{ env.GKE_CLUSTER }}
           location: ${{ env.GKE_ZONE }}
           credentials: ${{ secrets.GKE_SA_KEY }}
-      # Set up kustomize
       - name: Set up Kustomize
         run: |-
           curl -sfLo kustomize https://github.com/kubernetes-sigs/kustomize/releases/download/v3.1.0/kustomize_3.1.0_linux_amd64
