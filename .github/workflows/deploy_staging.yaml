@@ -3,15 +3,15 @@ on:
   repository_dispatch:
     types:
       - deploy_staging
-    workflow_dispatch:
-      inputs:
-        tag:
-          description: 'Tag for the docker image.'
-          required: true
-        repository:
-          description: 'Repository with the docker image.'
-          required: true
-          default: 'ghcr.io/cubeartisan'
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Tag for the docker image.'
+        required: true
+      repository:
+        description: 'Repository with the docker image.'
+        required: true
+        default: 'ghcr.io/cubeartisan'
 env:
   PROJECT_ID: cubeartisan
   GKE_CLUSTER: cubeartisan    # Add your cluster name here.
