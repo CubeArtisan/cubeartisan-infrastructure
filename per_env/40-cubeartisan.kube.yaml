@@ -143,11 +143,9 @@ spec:
             limits:
               memory: 4Gi
               cpu: 1.5
-              ephemeral-storage: 4Gi
             requests:
               memory: 4Gi
-              cpu: 1000m
-              ephemeral-storage: 4Gi
+              cpu: 1
           livenessProbe:
             httpGet:
               path: /version
@@ -166,6 +164,14 @@ spec:
               port: http
             failureThreshold: 40
             periodSeconds: 15
+          volumeMounts:
+            - mountPath: /CubeArtisan/server/private
+              name: carddatabase
       restartPolicy: Always
       imagePullSecrets:
         - name: github-docker
+      volumes:
+        - name: carddatabase
+          hostPath:
+            path: /carddatabase
+            type: DirectoryOrCreate
