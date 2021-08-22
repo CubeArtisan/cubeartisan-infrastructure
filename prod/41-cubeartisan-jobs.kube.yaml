@@ -99,7 +99,7 @@ spec:
                   memory: 8Gi
                   cpu: 1
                   ephemeral-storage: 4Gi
-          restartPolicy: Always
+          restartPolicy: Never
           imagePullSecrets:
             - name: github-docker
 ---
@@ -204,6 +204,6 @@ spec:
                   memory: 8Gi
                   cpu: 1
                   ephemeral-storage: 32Gi
-          restartPolicy: Always
+          restartPolicy: Never
           imagePullSecrets:
             - name: github-docker
