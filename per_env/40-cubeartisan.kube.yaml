@@ -39,7 +39,7 @@ spec:
       volumes:
         - name: carddatabase
           hostPath:
-            path: /carddatabase
+            path: /var/carddatabase
             type: DirectoryOrCreate
       containers:
         - name: cubeartisan
