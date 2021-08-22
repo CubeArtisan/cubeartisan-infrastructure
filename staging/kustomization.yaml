@@ -1,20 +1,22 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - 41-cubeartisan-jobs.kube.yaml
-  - 51-tls-certificate.kube.yaml
-  - ../per_env
+- 41-cubeartisan-jobs.kube.yaml
+- 51-tls-certificate.kube.yaml
+- ../per_env
 namespace: cubeartisan-staging
 images:
-  - name: ghcr.io/cubeartisan/cubeartisan
-    newTag: 7361596d
+- name: ghcr.io/cubeartisan/cubeartisan
+  newTag: 9947d172
+- name: ghcr.io/cubeartisan/cubeartisan-jobs
+  newTag: 9947d172
 patchesStrategicMerge:
-  - environment-override.yaml
-  - mongo-replicas-override.yaml 
+- environment-override.yaml
+- mongo-replicas-override.yaml
 patchesJson6902:
-  - path: ingress.patch.yaml
-    target:
-      group: networking.k8s.io
-      kind: Ingress
-      name: cubeartisan-ingress
-      version: v1
+- path: ingress.patch.yaml
+  target:
+    group: networking.k8s.io
+    kind: Ingress
+    name: cubeartisan-ingress
+    version: v1

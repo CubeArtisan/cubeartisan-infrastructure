@@ -1,0 +1,8 @@
+apiVersion: v1
+data:
+  TAG: 9947d172
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: cubeartisan-version
+  namespace: cubeartisan-staging
