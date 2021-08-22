@@ -3,4 +3,4 @@ kind: MongoDBCommunity
 metadata:
   name: mongo
 spec:
-  members: 2
+  members: 1
