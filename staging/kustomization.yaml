@@ -13,7 +13,6 @@ images:
 patchesStrategicMerge:
 - environment-override.yaml
 - mongo-replicas-override.yaml
-- neg-override.yaml
 patchesJson6902:
 - path: ingress.patch.yaml
   target:
