@@ -16,7 +16,7 @@ spec:
           containers:
             - name: cubeartisan
               image: "ghcr.io/cubeartisan/cubeartisan-jobs:latest"
-              imagePullPolicy: Always
+              imagePullPolicy: IfNotPresent
               command:
                 - yarn
                 - maintenance
@@ -129,7 +129,7 @@ spec:
           containers:
             - name: cubeartisan
               image: "ghcr.io/cubeartisan/cubeartisan-jobs:latest"
-              imagePullPolicy: Always
+              imagePullPolicy: IfNotPresent
               command:
                 - yarn
                 - export

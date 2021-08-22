@@ -30,16 +30,19 @@ spec:
       labels:
         service: cube-recommender
     spec:
+      restartPolicy: Always
+      imagePullSecrets:
+        - name: github-docker
       containers:
         - name: cube-recommender
-          image: ghcr.io/cubeartisan/cuberecommender:20210822
+          image: "ghcr.io/cubeartisan/cuberecommender:20210822"
           env:
             - name: CUBE_TEMPLATE_URL
               value: "http://cubeartisan/cube/{cube}/export/plaintext/lower"
           ports:
             - containerPort: 8000
               name: http
-          imagePullPolicy: Always
+          imagePullPolicy: IfNotPresent
           resources:
             limits:
               memory: 4Gi
@@ -65,6 +68,3 @@ spec:
               port: http
             failureThreshold: 15
             periodSeconds: 60
-      restartPolicy: Always
-      imagePullSecrets:
-        - name: github-docker

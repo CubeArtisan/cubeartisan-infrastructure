@@ -33,10 +33,18 @@ spec:
       labels:
         name: cubeartisan
     spec:
+      restartPolicy: Always
+      imagePullSecrets:
+        - name: github-docker
+      volumes:
+        - name: carddatabase
+          hostPath:
+            path: /carddatabase
+            type: DirectoryOrCreate
       containers:
         - name: cubeartisan
           image: "ghcr.io/cubeartisan/cubeartisan:latest"
-          imagePullPolicy: Always
+          imagePullPolicy: IfNotPresent
           env:
             - name: DISCORD_URL
               value: "https://discord.gg/NKCaZRFU"
@@ -167,11 +175,3 @@ spec:
           volumeMounts:
             - mountPath: /CubeArtisan/server/private
               name: carddatabase
-      restartPolicy: Always
-      imagePullSecrets:
-        - name: github-docker
-      volumes:
-        - name: carddatabase
-          hostPath:
-            path: /carddatabase
-            type: DirectoryOrCreate
