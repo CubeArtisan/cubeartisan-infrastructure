@@ -32,7 +32,7 @@ spec:
     spec:
       containers:
         - name: cube-recommender
-          image: ghcr.io/cubeartisan/cubecobrarecommender:20210822
+          image: ghcr.io/cubeartisan/cuberecommender:20210822
           env:
             - name: CUBE_TEMPLATE_URL
               value: "http://cubeartisan/cube/{cube}/export/plaintext/lower"
