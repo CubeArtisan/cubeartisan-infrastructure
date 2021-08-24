@@ -14,3 +14,10 @@ spec:
               value: https://staging.cubeartisan.net
             - name: ELASTIC_APM_ENVIRONMENT
               value: staging.cubeartisan.net
+          resources:
+            limits:
+              memory: 3Gi
+              cpu: 1
+            requests:
+              memory: 3Gi
+              cpu: 250m
