@@ -42,7 +42,7 @@ spec:
           ports:
             - containerPort: 8000
               name: http
-          imagePullPolicy: Always
+          imagePullPolicy: IfNotPresent
           resources:
             limits:
               memory: 4Gi

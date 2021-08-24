@@ -99,17 +99,9 @@ spec:
                   memory: 8Gi
                   cpu: 1
                   ephemeral-storage: 4Gi
-              volumeMounts:
-                - mountPath: /CubeArtisan/server/private
-                  name: carddatabase
           restartPolicy: Never
           imagePullSecrets:
             - name: github-docker
-          volumes:
-            - name: carddatabase
-              hostPath:
-                path: /carddatabase
-                type: DirectoryOrCreate
 ---
 apiVersion: batch/v1beta1
 kind: CronJob
@@ -221,5 +213,5 @@ spec:
           volumes:
             - name: carddatabase
               hostPath:
-                path: /carddatabase
+                path: /var/carddatabase
                 type: DirectoryOrCreate
