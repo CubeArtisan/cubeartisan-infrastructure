@@ -18,8 +18,9 @@ spec:
               image: "ghcr.io/cubeartisan/cubeartisan-jobs:latest"
               imagePullPolicy: IfNotPresent
               command:
-                - yarn
-                - analytics
+                - sh
+                - '-c'
+                - cd jobs && yarn analytics
               env:
                 - name: DISCORD_URL
                   value: "https://discord.gg/NKCaZRFU"

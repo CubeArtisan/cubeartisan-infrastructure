@@ -18,8 +18,9 @@ spec:
               image: "ghcr.io/cubeartisan/cubeartisan-jobs:latest"
               imagePullPolicy: IfNotPresent
               command:
-                - yarn
-                - maintenance
+                - sh
+                - '-c'
+                - cd jobs && yarn maintenance
               env:
                 - name: DISCORD_URL
                   value: "https://discord.gg/NKCaZRFU"
@@ -123,8 +124,9 @@ spec:
               image: "ghcr.io/cubeartisan/cubeartisan-jobs:latest"
               imagePullPolicy: IfNotPresent
               command:
-                - yarn
-                - export
+                - sh
+                - '-c'
+                - cd jobs && yarn export
               env:
                 - name: DISCORD_URL
                   value: "https://discord.gg/NKCaZRFU"
