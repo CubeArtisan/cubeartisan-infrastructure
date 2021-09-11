@@ -1,4 +1,30 @@
-apiVersion: batch/v1beta1
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMServiceAccount
+metadata:
+  name: update-cards
+spec:
+  displayName: update-cards
+---
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicy
+metadata:
+  name: update-cards
+spec:
+  resourceRef:
+    apiVersion: iam.cnrm.cloud.google.com/v1beta1
+    kind: IAMServiceAccount
+    name: update-cards
+  bindings:
+    - role: roles/iam.workloadIdentityUser
+      members:
+        - serviceAccount:cubeartisan.svc.id.goog[cubeartisan/update-cards]
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: update-cards
+---
+apiVersion: batch/v1
 kind: CronJob
 metadata:
   labels:
@@ -13,6 +39,7 @@ spec:
           labels:
             name: cubeartisan-maintenance
         spec:
+          serviceAccountName: update-cards
           containers:
             - name: cubeartisan
               image: "ghcr.io/cubeartisan/cubeartisan-jobs:latest"
@@ -104,7 +131,7 @@ spec:
           imagePullSecrets:
             - name: github-docker
 ---
-apiVersion: batch/v1beta1
+apiVersion: batch/v1
 kind: CronJob
 metadata:
   labels:
