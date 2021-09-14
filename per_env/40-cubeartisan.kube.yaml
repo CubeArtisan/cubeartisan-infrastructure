@@ -131,10 +131,10 @@ spec:
               name: http
           resources:
             limits:
-              memory: 4Gi
+              memory: 6Gi
               cpu: 1.5
             requests:
-              memory: 4Gi
+              memory: 6Gi
               cpu: 1
           livenessProbe:
             httpGet:
