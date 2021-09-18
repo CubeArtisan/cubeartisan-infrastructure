@@ -18,6 +18,7 @@ spec:
     - role: roles/iam.workloadIdentityUser
       members:
         - serviceAccount:cubeartisan.svc.id.goog[cubeartisan/update-cards]
+        - serviceAccount:cubeartisan.svc.id.goog[cubeartisan/velero]
 ---
 apiVersion: v1
 kind: ServiceAccount
