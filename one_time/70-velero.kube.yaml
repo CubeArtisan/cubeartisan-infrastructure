@@ -2403,7 +2403,7 @@ items:
   kind: ServiceAccount
   metadata:
     annotations:
-      iam.gke.io/gcp-service-account: velero@cubeartisan.iam.gserviceaccount.com
+      iam.gke.io/gcp-service-account: update-cards@cubeartisan.iam.gserviceaccount.com
     creationTimestamp: null
     labels:
       component: velero
@@ -2419,7 +2419,7 @@ items:
     namespace: velero
   spec:
     config:
-      serviceAccount: velero@cubeartisan.iam.gserviceaccount.com
+      serviceAccount: update-cards@cubeartisan.iam.gserviceaccount.com
     default: true
     objectStorage:
       bucket: cubeartisan-backup
