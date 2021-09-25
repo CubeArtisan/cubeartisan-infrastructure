@@ -4,7 +4,7 @@ metadata:
   namespace: kube-logging
   name: elasticsearch
 spec:
-  version: 7.14.0-SNAPSHOT
+  version: 7.15.0
   http:
     service:
       spec:
