@@ -137,10 +137,10 @@ spec:
           resources:
             limits:
               memory: 6Gi
-              cpu: 1.5
-            requests:
-              memory: 6Gi
               cpu: 1
+            requests:
+              memory: 4Gi
+              cpu: 200m
           livenessProbe:
             httpGet:
               path: /version
@@ -152,7 +152,7 @@ spec:
               path: /version
               port: http
             initialDelaySeconds: 180
-            periodSeconds: 15
+            periodSeconds: 60
           startupProbe:
             httpGet:
               path: /version

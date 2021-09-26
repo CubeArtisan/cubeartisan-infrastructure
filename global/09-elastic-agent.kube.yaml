@@ -145,8 +145,8 @@ spec:
                 memory: 1024Mi
                 cpu: 1000m
               requests:
-                memory: 1024Mi
-                cpu: 500m
+                memory: 512Mi
+                cpu: 100m
 ---
 apiVersion: agent.k8s.elastic.co/v1alpha1
 kind: Agent
@@ -174,10 +174,10 @@ spec:
             resources:
               limits:
                 memory: 300Mi
-                cpu: 500m
+                cpu: 200m
               requests:
                 memory: 300Mi
-                cpu: 100m
+                cpu: 10m
             volumeMounts:
             - mountPath: /var/lib/docker/containers
               name: varlibdockercontainers
