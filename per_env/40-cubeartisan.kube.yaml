@@ -32,6 +32,11 @@ spec:
               value: "https://discord.gg/NKCaZRFU"
             - name: DOWNTIME_ACTIVE
               value: "false"
+            - name: CUBEARTISAN_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: cubeartisansecrets
+                  key: CUBEARTISAN_API_KEY
             - name: ELASTIC_APM_ACTIVE
               value: 'true'
             - name: ELASTIC_APM_CLOUD_PROVIDER
