@@ -24,6 +24,14 @@ spec:
         - name: readWriteAnyDatabase
           db: admin
       scramCredentialsSecretName: my-scram
+    - name: beats
+      db: admin
+      passwordSecretRef: # a reference to the secret that will be used to generate the user's password
+        name: mongodb-beats-password
+      roles:
+        - name: clusterMonitor
+          db: admin
+      scramCredentialsSecretName: my-scram-beats
   additionalMongodConfig:
     storage.wiredTiger.engineConfig.journalCompressor: zlib
   statefulSet:
