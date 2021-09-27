@@ -124,10 +124,10 @@ spec:
               resources:
                 limits:
                   memory: 8Gi
-                  cpu: 1.5
+                  cpu: 1
                   ephemeral-storage: 4Gi
                 requests:
-                  memory: 8Gi
+                  memory: 2Gi
                   cpu: 1
                   ephemeral-storage: 4Gi
           restartPolicy: Never
@@ -230,10 +230,10 @@ spec:
               resources:
                 limits:
                   memory: 8Gi
-                  cpu: 1.5
+                  cpu: 1
                   ephemeral-storage: 32Gi
                 requests:
-                  memory: 8Gi
+                  memory: 2Gi
                   cpu: 1
                   ephemeral-storage: 32Gi
               volumeMounts:

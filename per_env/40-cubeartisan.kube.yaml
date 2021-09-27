@@ -139,8 +139,8 @@ spec:
               memory: 6Gi
               cpu: 1
             requests:
-              memory: 4Gi
-              cpu: 200m
+              memory: 1Gi
+              cpu: 100m
           livenessProbe:
             httpGet:
               path: /version

@@ -23,14 +23,14 @@ spec:
         - name: kibana
           env:
             - name: NODE_OPTIONS
-              value: "--max-old-space-size=1024"
+              value: "--max-old-space-size=512"
           resources:
             limits:
-              memory: 2Gi
+              memory: 1Gi
               cpu: 1000m
             requests:
-              memory: 1.5Gi
-              cpu: 100m
+              memory: 512Mi
+              cpu: 50m
   config:
     xpack.fleet.agents.elasticsearch.host: https://elasticsearch-es-http.kube-logging.svc:9200
     xpack.fleet.agents.fleet_server.hosts: ["https://fleet-server-agent-http.kube-logging.svc:8220"]
