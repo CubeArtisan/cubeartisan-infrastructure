@@ -17,7 +17,6 @@ rules:
       - events
       - services
       - configmaps
-      - nodes
       - nodes/metrics
       - nodes/proxy
       - nodes/stats
@@ -122,11 +121,11 @@ spec:
           - name: agent
             resources:
               limits:
-                memory: 1024Mi
+                memory: 1.5Gi
                 cpu: 100m
               requests:
-                memory: 512Mi
-                cpu: 20m
+                memory: 1024Mi
+                cpu: 50m
 ---
 apiVersion: agent.k8s.elastic.co/v1alpha1
 kind: Agent
@@ -153,11 +152,11 @@ spec:
           - name: agent
             resources:
               limits:
-                memory: 256Mi
+                memory: 512Mi
                 cpu: 200m
               requests:
-                memory: 128Mi
-                cpu: 10m
+                memory: 256Mi
+                cpu: 50m
             volumeMounts:
             - mountPath: /var/lib/docker/containers
               name: varlibdockercontainers
