@@ -147,8 +147,9 @@ spec:
       template:
         metadata:
           labels:
-            name: cubeartisan-maintenance
+            name: cubeartisan-export
         spec:
+          serviceAccountName: update-cards
           containers:
             - name: cubeartisan
               image: "ghcr.io/cubeartisan/cubeartisan-jobs:latest"
