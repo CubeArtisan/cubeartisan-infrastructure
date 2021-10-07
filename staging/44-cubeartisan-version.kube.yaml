@@ -1,6 +1,6 @@
 apiVersion: v1
 data:
-  TAG: 4a17bbe6
+  TAG: bad5624b
 kind: ConfigMap
 metadata:
   creationTimestamp: null
