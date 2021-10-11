@@ -13,9 +13,22 @@ metadata:
   name: cubeartisan-backend-config
 spec:
   timeoutSec: 3600
+  connectionDraining:
+    drainingTimeoutSec: 3600
   sessionAffinity:
-    affinityType: GENERATED_COOKIE
+    affinityType: "GENERATED_COOKIE"
     affinityCookieTtlSec: 600
+  cdn:
+    enabled: true
+    cachePolicy:
+      includeHost: true
+      includeProtocol: true
+      includeQueryString: true
+  customRequestHeaders:
+    headers:
+    - "X-Client-Region:{client_region}"
+    - "X-Client-City:{client_city}"
+    - "X-Client-CityLatLong:{client_city_lat_long}"
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -23,7 +36,6 @@ metadata:
   name: cubeartisan-ingress
   annotations:
     networking.gke.io/v1beta1.FrontendConfig: cubeartisan-frontend-config
-    cloud.google.com/backend-config: '{"default": "cubeartisan-backend-config"}'
     networking.gke.io/managed-certificates: cubeartisan-cert
     kubernetes.io/ingress.class: gce
 spec:
