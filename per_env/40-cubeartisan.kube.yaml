@@ -48,7 +48,7 @@ spec:
           imagePullPolicy: IfNotPresent
           env:
             - name: DISCORD_URL
-              value: "https://discord.gg/NKCaZRFU"
+              value: "https://discord.gg/yeQY8WMXRC"
             - name: DOWNTIME_ACTIVE
               value: "false"
             - name: CUBEARTISAN_API_KEY
