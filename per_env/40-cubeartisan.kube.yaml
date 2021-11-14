@@ -1,4 +1,11 @@
 apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: log-and-trace
+  annotations:
+    iam.gke.io/gcp-service-account: log-and-trace@cubeartisan.iam.gserviceaccount.com
+---
+apiVersion: v1
 kind: Service
 metadata:
   annotations:
@@ -42,13 +49,14 @@ spec:
           hostPath:
             path: /var/carddatabase
             type: DirectoryOrCreate
+      serviceAccountName: log-and-trace
       containers:
         - name: cubeartisan
           image: "ghcr.io/cubeartisan/cubeartisan:latest"
           imagePullPolicy: IfNotPresent
           env:
             - name: DISCORD_URL
-              value: "https://discord.gg/yeQY8WMXRC"
+              value: "https://discord.gg/qWPjyACs32"
             - name: DOWNTIME_ACTIVE
               value: "false"
             - name: CUBEARTISAN_API_KEY
@@ -56,40 +64,6 @@ spec:
                 secretKeyRef:
                   name: cubeartisansecrets
                   key: CUBEARTISAN_API_KEY
-            - name: ELASTIC_APM_ACTIVE
-              value: 'true'
-            - name: ELASTIC_APM_CLOUD_PROVIDER
-              value: none
-            - name: ELASTIC_APM_ENVIRONMENT
-              value: "<ENV>"
-            - name: ELASTIC_APM_SECRET_TOKEN
-              valueFrom:
-                secretKeyRef:
-                  name: cubeartisansecrets
-                  key: ELASTIC_APM_SECRET_TOKEN
-            - name: ELASTIC_APM_SERVER_URL
-              value: "http://apm.kube-logging.svc:8200/"
-            - name: ELASTIC_APM_SERVICE_NAME
-              value: CubeArtisan
-            - name: ELASTIC_APM_SERVICE_VERSION
-              valueFrom:
-                configMapKeyRef:
-                  name: cubeartisan-version
-                  key: TAG
-            - name: ELASTIC_APM_TRANSACTION_IGNORE_URLS
-              value: "/socket*"
-            - name: ELASTICSEARCH_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: cubeartisansecrets
-                  key: ELASTICSEARCH_PASSWORD
-            - name: ELASTICSEARCH_URL
-              value: "https://elasticsearch-es-http.kube-logging.svc:9200/"
-            - name: ELASTICSEARCH_USER
-              valueFrom:
-                secretKeyRef:
-                  name: cubeartisansecrets
-                  key: ELASTICSEARCH_USER
             - name: EMAIL_CONFIG_PASSWORD
               valueFrom:
                 secretKeyRef:
@@ -150,6 +124,8 @@ spec:
               value: support@cubeartisan.net
             - name: SUPPORT_EMAIL_FROM
               value: CubeArtisan Support Team <support@cubeartisan.net>
+            - name: TELMETRY
+              value: 'true'
           ports:
             - containerPort: 5000
               name: http
