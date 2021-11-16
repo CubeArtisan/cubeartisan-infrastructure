@@ -9,9 +9,9 @@ resources:
 - 72-cubeartisan-backup.kube.yaml
 images:
 - name: ghcr.io/cubeartisan/cubeartisan
-  newTag: v1.2.10
+  newTag: v1.2.11
 - name: ghcr.io/cubeartisan/cubeartisan-jobs
-  newTag: v1.2.10
+  newTag: v1.2.11
 patchesStrategicMerge:
 - environment-override.yaml
 patchesJson6902:
