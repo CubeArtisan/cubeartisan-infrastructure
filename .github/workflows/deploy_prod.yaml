@@ -73,3 +73,9 @@ jobs:
         run: |-
           kubectl rollout status -n cubeartisan deployment/$DEPLOYMENT_NAME --timeout=600s
           kubectl get -n cubeartisan services -o wide
+      - name: Discord Notification
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        uses: Ilshidur/action-discord@0.3.2
+        with:
+          args: "https://github.com/CubeArtisan/cubeartisan/releases/tag/${{ env.TAG }}"
