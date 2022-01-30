@@ -74,8 +74,6 @@ spec:
                 secretKeyRef:
                   name: cubeartisansecrets
                   key: EMAIL_CONFIG_USERNAME
-            - name: FLASKROOT
-              value: "http://cube-recommender"
             - name: LISTEN_ADDR
               value: "0.0.0.0"
             - name: MONGODB_DBNAME
@@ -93,6 +91,8 @@ spec:
               value: mongo
             - name: MONGODB_USER
               value: cubeartisan
+            - name: MTGML_SERVER
+              value: "https://mtgml.cubeartisan.net/"
             - name: NODE_ENV
               value: "production"
             - name: PORT
