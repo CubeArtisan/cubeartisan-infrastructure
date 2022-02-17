@@ -7,9 +7,9 @@ resources:
 namespace: cubeartisan-staging
 images:
 - name: ghcr.io/cubeartisan/cubeartisan
-  newTag: 58cb2eed
+  newTag: 7c14f8ad
 - name: ghcr.io/cubeartisan/cubeartisan-jobs
-  newTag: 58cb2eed
+  newTag: 7c14f8ad
 patchesStrategicMerge:
 - environment-override.yaml
 - mongo-replicas-override.yaml
