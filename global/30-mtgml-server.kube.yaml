@@ -37,23 +37,21 @@ spec:
         - name: github-docker
       containers:
         - name: cube-recommender
-          image: "ghcr.io/cubeartisan/mtgml:20220130"
+          image: "ghcr.io/cubeartisan/mtgml:20220210-1"
           env:
             - name: MTGML_VERSION
-              value: "20220209"
+              value: "20220210-1"
           ports:
             - containerPort: 8000
               name: http
           imagePullPolicy: IfNotPresent
           resources:
             limits:
-              memory: 12Gi
-              cpu: 2
-              ephemeral-storage: 8Gi
+              memory: 1Gi
+              cpu: 1
             requests:
-              memory: 12Gi
-              cpu: 2
-              ephemeral-storage: 8Gi
+              memory: 1Gi
+              cpu: 0.5
           livenessProbe:
             httpGet:
               path: /version
