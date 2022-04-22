@@ -37,10 +37,10 @@ spec:
         - name: github-docker
       containers:
         - name: cube-recommender
-          image: "ghcr.io/cubeartisan/mtgml:20220210-1"
+          image: "ghcr.io/cubeartisan/mtgml:20220314"
           env:
             - name: MTGML_VERSION
-              value: "20220210-1"
+              value: "20220314"
           ports:
             - containerPort: 8000
               name: http
