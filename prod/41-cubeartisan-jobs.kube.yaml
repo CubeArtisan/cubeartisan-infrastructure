@@ -1,25 +1,3 @@
-apiVersion: iam.cnrm.cloud.google.com/v1beta1
-kind: IAMServiceAccount
-metadata:
-  name: update-cards
-spec:
-  displayName: update-cards
----
-apiVersion: iam.cnrm.cloud.google.com/v1beta1
-kind: IAMPolicy
-metadata:
-  name: update-cards
-spec:
-  resourceRef:
-    apiVersion: iam.cnrm.cloud.google.com/v1beta1
-    kind: IAMServiceAccount
-    name: update-cards
-  bindings:
-    - role: roles/iam.workloadIdentityUser
-      members:
-        - serviceAccount:cubeartisan.svc.id.goog[cubeartisan/update-cards]
-        - serviceAccount:cubeartisan.svc.id.goog[cubeartisan/velero]
----
 apiVersion: v1
 kind: ServiceAccount
 metadata:

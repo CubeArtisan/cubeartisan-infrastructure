@@ -124,15 +124,15 @@ spec:
               value: support@cubeartisan.net
             - name: SUPPORT_EMAIL_FROM
               value: CubeArtisan Support Team <support@cubeartisan.net>
-            - name: TELMETRY
+            - name: TELEMETRY
               value: 'true'
           ports:
             - containerPort: 5000
               name: http
           resources:
             limits:
-              memory: 6Gi
-              cpu: 1
+              memory: 4Gi
+              cpu: 1000m
             requests:
               memory: 1Gi
               cpu: 250m
@@ -141,7 +141,7 @@ spec:
               path: /version
               port: http
             failureThreshold: 1
-            periodSeconds: 30
+            periodSeconds: 60
           readinessProbe:
             httpGet:
               path: /version

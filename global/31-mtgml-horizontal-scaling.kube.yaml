@@ -9,5 +9,5 @@ spec:
     kind: Deployment
     name: mtgml-server
   minReplicas: 1
-  maxReplicas: 4
-  targetCPUUtilizationPercentage: 80
+  maxReplicas: 8
+  targetCPUUtilizationPercentage: 90
