@@ -36,6 +36,10 @@ spec:
   selector:
     matchLabels:
       name: cubeartisan
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
   template:
     metadata:
       labels:
@@ -131,9 +135,9 @@ spec:
               name: http
           resources:
             limits:
-              memory: 2Gi
+              memory: 1600Mi
             requests:
-              memory: 2Gi
+              memory: 1600Mi
               cpu: 100m
           livenessProbe:
             httpGet:
@@ -175,4 +179,4 @@ spec:
     kind: Deployment
     name: cubeartisan
   updatePolicy:
-    updateMode: Off
+    updateMode: "Off"

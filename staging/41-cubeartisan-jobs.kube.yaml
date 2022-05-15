@@ -95,9 +95,8 @@ spec:
               resources:
                 limits:
                   memory: 4Gi
-                  cpu: 500m
                 requests:
-                  memory: 2Gi
+                  memory: 4Gi
                   cpu: 250m
               volumeMounts:
                 - mountPath: /CubeArtisan/jobs/private
