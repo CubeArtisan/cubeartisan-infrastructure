@@ -94,10 +94,10 @@ spec:
               resources:
                 limits:
                   memory: 4Gi
-                  cpu: 1
+                  cpu: 500m
                 requests:
                   memory: 2Gi
-                  cpu: 1
+                  cpu: 250m
               volumeMounts:
                 - mountPath: /CubeArtisan/jobs/private
                   name: carddatabase

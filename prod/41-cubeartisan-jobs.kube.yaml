@@ -101,7 +101,7 @@ spec:
                   value: CubeArtisan Support Team <support@cubeartisan.net>
               resources:
                 limits:
-                  memory: 8Gi
+                  memory: 4Gi
                   cpu: 1
                   ephemeral-storage: 4Gi
                 requests:
@@ -208,7 +208,7 @@ spec:
                   value: CubeArtisan Support Team <support@cubeartisan.net>
               resources:
                 limits:
-                  memory: 8Gi
+                  memory: 4Gi
                   cpu: 1
                   ephemeral-storage: 32Gi
                 requests:

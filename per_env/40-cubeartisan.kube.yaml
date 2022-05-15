@@ -131,29 +131,37 @@ spec:
               name: http
           resources:
             limits:
-              memory: 4Gi
-              cpu: 1000m
-            requests:
-              memory: 1Gi
+              memory: 2Gi
               cpu: 250m
+            requests:
+              memory: 2Gi
+              cpu: 100m
           livenessProbe:
             httpGet:
               path: /version
               port: http
+              httpHeaders:
+                - name: User-Agent
+                  value: 'kube-liveness-probe'
             failureThreshold: 1
             periodSeconds: 60
           readinessProbe:
             httpGet:
               path: /version
               port: http
-            initialDelaySeconds: 30
+              httpHeaders:
+                - name: User-Agent
+                  value: 'kube-readiness-probe'
             periodSeconds: 60
           startupProbe:
             httpGet:
               path: /version
               port: http
-            failureThreshold: 40
-            periodSeconds: 15
+              httpHeaders:
+                - name: User-Agent
+                  value: 'kube-startup-probe'
+            failureThreshold: 60
+            periodSeconds: 5
           volumeMounts:
             - mountPath: /CubeArtisan/server/private
               name: carddatabase

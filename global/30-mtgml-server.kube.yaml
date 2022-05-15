@@ -1,4 +1,12 @@
 apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: log-and-trace
+  namespace: mtgml
+  annotations:
+    iam.gke.io/gcp-service-account: log-and-trace@cubeartisan.iam.gserviceaccount.com
+---
+apiVersion: v1
 kind: Service
 metadata:
   labels:
@@ -40,11 +48,21 @@ spec:
         - name: github-docker
       serviceAccountName: log-and-trace
       containers:
-        - name: cube-recommender
-          image: "ghcr.io/cubeartisan/mtgml:20220502-3"
+        - name: mtgml-server
+          image: "ghcr.io/cubeartisan/mtgml:20220502-6-3"
           env:
             - name: MTGML_VERSION
-              value: "20220502-3"
+              value: "20220502-6-3"
+            - name: NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: CONTAINER_NAME
+              value: "mtgml-server"
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
           ports:
             - containerPort: 8000
               name: http
@@ -60,17 +78,25 @@ spec:
             httpGet:
               path: /version
               port: http
-            failureThreshold: 1
-            periodSeconds: 60
+              httpHeaders:
+                - name: User-Agent
+                  value: 'kube-liveness-probe'
+            failureThreshold: 3
+            periodSeconds: 30
           readinessProbe:
             httpGet:
               path: /version
               port: http
-            initialDelaySeconds: 15
+              httpHeaders:
+                - name: User-Agent
+                  value: 'kube-readiness-probe'
             periodSeconds: 60
           startupProbe:
             httpGet:
               path: /version
               port: http
-            failureThreshold: 15
-            periodSeconds: 60
+              httpHeaders:
+                - name: User-Agent
+                  value: 'kube-startup-probe'
+            failureThreshold: 60
+            periodSeconds: 5

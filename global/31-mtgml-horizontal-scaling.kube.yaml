@@ -10,4 +10,4 @@ spec:
     name: mtgml-server
   minReplicas: 1
   maxReplicas: 8
-  targetCPUUtilizationPercentage: 90
+  targetCPUUtilizationPercentage: 75
