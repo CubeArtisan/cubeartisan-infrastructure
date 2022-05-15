@@ -13,6 +13,7 @@ metadata:
   name: cubeartisan-maintenance
 spec:
   schedule: "0 10 * * *"
+  successfulJobsHistoryLimit: 0
   jobTemplate:
     spec:
       template:
@@ -120,6 +121,7 @@ metadata:
   name: cubeartisan-export
 spec:
   schedule: "0 12 * * 1"
+  successfulJobsHistoryLimit: 0
   jobTemplate:
     spec:
       template:

@@ -9,7 +9,7 @@ spec:
     name: cubeartisan
   minReplicas: 2
   maxReplicas: 8
-  targetCPUUtilizationPercentage: 60
+  targetCPUUtilizationPercentage: 80
 ---
 apiVersion: autoscaling/v1
 kind: HorizontalPodAutoscaler
@@ -23,3 +23,23 @@ spec:
   minReplicas: 3
   maxReplicas: 8
   targetCPUUtilizationPercentage: 80
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: cubeartisan
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      name: cubeartisan
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: mongo
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app: mongo-svc

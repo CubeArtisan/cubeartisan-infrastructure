@@ -132,7 +132,6 @@ spec:
           resources:
             limits:
               memory: 2Gi
-              cpu: 250m
             requests:
               memory: 2Gi
               cpu: 100m
@@ -165,3 +164,15 @@ spec:
           volumeMounts:
             - mountPath: /CubeArtisan/server/private
               name: carddatabase
+---
+apiVersion: autoscaling.k8s.io/v1
+kind: VerticalPodAutoscaler
+metadata:
+  name: cubeartisan-vpa
+spec:
+  targetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: cubeartisan
+  updatePolicy:
+    updateMode: Off
