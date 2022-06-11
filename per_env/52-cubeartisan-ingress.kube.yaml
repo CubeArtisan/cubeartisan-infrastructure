@@ -24,6 +24,9 @@ spec:
       includeHost: true
       includeProtocol: true
       includeQueryString: true
+    cacheMode: USE_ORIGIN_HEADERS
+    negativeCaching: false
+    requestCoalescing: true
   customRequestHeaders:
     headers:
     - "X-Client-Region:{client_region}"
