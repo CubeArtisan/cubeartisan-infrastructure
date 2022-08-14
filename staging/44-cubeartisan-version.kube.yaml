@@ -1,6 +1,6 @@
 apiVersion: v1
 data:
-  TAG: d2ca245e
+  TAG: 66d4b3fd
 kind: ConfigMap
 metadata:
   creationTimestamp: null
