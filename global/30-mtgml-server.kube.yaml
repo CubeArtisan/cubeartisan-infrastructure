@@ -49,30 +49,37 @@ spec:
       serviceAccountName: log-and-trace
       containers:
         - name: mtgml-server
-          image: "ghcr.io/cubeartisan/mtgml:20220502-6-3"
+          image: "ghcr.io/cubeartisan/mtgml:20220922-6"
           env:
             - name: MTGML_VERSION
-              value: "20220502-6-3"
+              value: "20220922-6"
             - name: NAMESPACE
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.namespace
             - name: CONTAINER_NAME
               value: "mtgml-server"
+            - name: MTGML_AUTH_ENABLED
+              value: "False"
             - name: POD_NAME
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.name
+            - name: MTGML_AUTH_TOKENS
+              valueFrom:
+                secretKeyRef:
+                  name: mtgmlsecrets
+                  key: MTGML_AUTH_TOKENS
           ports:
             - containerPort: 8000
               name: http
           imagePullPolicy: IfNotPresent
           resources:
             limits:
-              memory: 1Gi
+              memory: 2Gi
             requests:
-              memory: 1Gi
-              cpu: 1
+              memory: 2Gi
+              cpu: 1350m
           livenessProbe:
             httpGet:
               path: /version

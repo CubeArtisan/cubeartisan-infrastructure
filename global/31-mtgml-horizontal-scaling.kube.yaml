@@ -9,7 +9,7 @@ spec:
     kind: Deployment
     name: mtgml-server
   minReplicas: 1
-  maxReplicas: 8
+  maxReplicas: 4
   metrics:
     - type: Resource
       resource:

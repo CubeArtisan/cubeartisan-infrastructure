@@ -135,9 +135,9 @@ spec:
               name: http
           resources:
             limits:
-              memory: 1600Mi
+              memory: 2.5Gi
             requests:
-              memory: 1600Mi
+              memory: 2.5Gi
               cpu: 100m
           livenessProbe:
             httpGet:
