@@ -47,24 +47,12 @@ spec:
       imagePullSecrets:
         - name: github-docker
       serviceAccountName: log-and-trace
-      affinity:
-        podAntiAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-            - weight: 100
-              podAffinityTerm:
-                topologyKey: topology.gke.io/zone
-                labelSelector:
-                  matchExpressions:
-                    - key: service
-                      operator: In
-                      values:
-                        - mtgml-server
       containers:
         - name: mtgml-server
-          image: "ghcr.io/cubeartisan/mtgml:20220922-6"
+          image: "ghcr.io/cubeartisan/mtgml:20220922-6-test4xla"
           env:
             - name: MTGML_VERSION
-              value: "20220922-6"
+              value: "20220922-6-test4xla"
             - name: NAMESPACE
               valueFrom:
                 fieldRef:
@@ -88,10 +76,10 @@ spec:
           imagePullPolicy: IfNotPresent
           resources:
             limits:
-              memory: 4Gi
+              memory: 3072Mi
             requests:
-              memory: 4Gi
-              cpu: 1400m
+              memory: 3072Mi
+              cpu: 1750m
           livenessProbe:
             httpGet:
               path: /version

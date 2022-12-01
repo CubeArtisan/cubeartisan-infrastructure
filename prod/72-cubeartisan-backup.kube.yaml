@@ -31,4 +31,16 @@ spec:
     ttl: 720h0m0s
   useOwnerReferencesInBackup: false
 status: {}
-
+---
+apiVersion: autoscaling.k8s.io/v1
+kind: VerticalPodAutoscaler
+metadata:
+  name: velero-vpa
+  namespace: cubeartisan
+spec:
+  targetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: velero
+  updatePolicy:
+    updateMode: "Auto"

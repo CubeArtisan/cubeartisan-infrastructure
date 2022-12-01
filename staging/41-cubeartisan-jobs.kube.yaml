@@ -109,3 +109,16 @@ spec:
               hostPath:
                 path: /var/carddatabase
                 type: DirectoryOrCreate
+---
+apiVersion: autoscaling.k8s.io/v1
+kind: VerticalPodAutoscaler
+metadata:
+  name: cubeartisan-populate-analytics-vpa
+  namespace: cubeartisan-staging
+spec:
+  targetRef:
+    apiVersion: batch/v1
+    kind: CronJob
+    name: cubeartisan-populate-analytics
+  updatePolicy:
+    updateMode: "Off"

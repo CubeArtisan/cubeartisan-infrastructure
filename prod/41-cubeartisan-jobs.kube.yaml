@@ -228,3 +228,29 @@ spec:
               hostPath:
                 path: /var/carddatabase
                 type: DirectoryOrCreate
+---
+apiVersion: autoscaling.k8s.io/v1
+kind: VerticalPodAutoscaler
+metadata:
+  name: cubeartisan-maintenance-vpa
+  namespace: cubeartisan
+spec:
+  targetRef:
+    apiVersion: batch/v1
+    kind: CronJob
+    name: cubeartisan-maintenance
+  updatePolicy:
+    updateMode: "Off"
+---
+apiVersion: autoscaling.k8s.io/v1
+kind: VerticalPodAutoscaler
+metadata:
+  name: cubeartisan-export-vpa
+  namespace: cubeartisan
+spec:
+  targetRef:
+    apiVersion: batch/v1
+    kind: CronJob
+    name: cubeartisan-export
+  updatePolicy:
+    updateMode: "Off"

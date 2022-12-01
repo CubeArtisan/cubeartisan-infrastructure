@@ -5,7 +5,7 @@ metadata:
 spec:
   members: 3
   type: ReplicaSet
-  version: "4.4.10"
+  version: "4.4.18"
   security:
     authentication:
       modes: ["SCRAM"]
@@ -24,57 +24,29 @@ spec:
         - name: readWriteAnyDatabase
           db: admin
       scramCredentialsSecretName: my-scram
-    - name: beats
-      db: admin
-      passwordSecretRef: # a reference to the secret that will be used to generate the user's password
-        name: mongodb-beats-password
-      roles:
-        - name: clusterMonitor
-          db: admin
-      scramCredentialsSecretName: my-scram-beats
   additionalMongodConfig:
     storage.wiredTiger.engineConfig.journalCompressor: zlib
   statefulSet:
     spec:
       template:
         spec:
-          affinity:
-            podAffinity:
-              preferredDuringSchedulingIgnoredDuringExecution:
-                - weight: 100
-                  podAffinityTerm:
-                    labelSelector:
-                      matchExpressions:
-                        - key: name
-                          operator: In
-                          values:
-                            - cubeartisan
-            podAntiAffinity:
-              preferredDuringSchedulingIgnoredDuringExecution:
-                - weight: 100
-                  podAffinityTerm:
-                    topologyKey: topology.gke.io/zone
-                    labelSelector:
-                      matchExpressions:
-                        - key: app
-                          operator: In
-                          values:
-                            - mongo-svc
           containers:
             - name: "mongodb-agent"
               resources:
                 limits:
                   memory: 64Mi
                 requests:
-                  cpu: 30m
+                  cpu: 35m
                   memory: 64Mi
             - name: "mongod"
               resources:
                 limits:
-                  memory: 1Gi
+                  memory: 960Mi
                 requests:
-                  cpu: 70m
-                  memory: 1Gi
+                  # Set so it sums to 100 when combined with the other container.
+                  cpu: 90m
+                  # Set so it sums to 1024 when combined with the other container.
+                  memory: 960Mi
 ---
 apiVersion: autoscaling.k8s.io/v1
 kind: VerticalPodAutoscaler
