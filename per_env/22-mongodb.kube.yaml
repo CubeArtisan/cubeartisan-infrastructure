@@ -38,6 +38,28 @@ spec:
     spec:
       template:
         spec:
+          affinity:
+            podAffinity:
+              preferredDuringSchedulingIgnoredDuringExecution:
+                - weight: 100
+                  podAffinityTerm:
+                    labelSelector:
+                      matchExpressions:
+                        - key: name
+                          operator: In
+                          values:
+                            - cubeartisan
+            podAntiAffinity:
+              preferredDuringSchedulingIgnoredDuringExecution:
+                - weight: 100
+                  podAffinityTerm:
+                    topologyKey: topology.gke.io/zone
+                    labelSelector:
+                      matchExpressions:
+                        - key: app
+                          operator: In
+                          values:
+                            - mongo-svc
           containers:
             - name: "mongodb-agent"
               resources:
@@ -49,10 +71,10 @@ spec:
             - name: "mongod"
               resources:
                 limits:
-                  memory: 960Mi
+                  memory: 1Gi
                 requests:
                   cpu: 70m
-                  memory: 960Mi
+                  memory: 1Gi
 ---
 apiVersion: autoscaling.k8s.io/v1
 kind: VerticalPodAutoscaler

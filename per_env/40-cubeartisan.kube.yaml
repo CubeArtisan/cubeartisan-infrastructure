@@ -54,6 +54,18 @@ spec:
             path: /var/carddatabase
             type: DirectoryOrCreate
       serviceAccountName: log-and-trace
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                topologyKey: topology.gke.io/zone
+                labelSelector:
+                  matchExpressions:
+                    - key: name
+                      operator: In
+                      values:
+                        - cubeartisan
       containers:
         - name: cubeartisan
           image: "ghcr.io/cubeartisan/cubeartisan:latest"
@@ -135,9 +147,9 @@ spec:
               name: http
           resources:
             limits:
-              memory: 2.5Gi
+              memory: 3Gi
             requests:
-              memory: 2.5Gi
+              memory: 3Gi
               cpu: 100m
           livenessProbe:
             httpGet:
