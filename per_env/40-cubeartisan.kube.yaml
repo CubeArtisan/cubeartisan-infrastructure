@@ -79,7 +79,7 @@ spec:
                         - cubeartisan
       containers:
         - name: cubeartisan
-          image: "gcr.io/cubeartisan/cubeartisan:latest"
+          image: "ghcr.io/cubeartisan/cubeartisan:latest"
           imagePullPolicy: IfNotPresent
           env:
             - name: DISCORD_URL

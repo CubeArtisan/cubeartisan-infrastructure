@@ -8,10 +8,6 @@ resources:
 - 42-horizontal-auto-scaling.kube.yaml
 - 72-cubeartisan-backup.kube.yaml
 images:
-- name: gcr.io/cubeartisan/cubeartisan
-  newTag: v1.4.6.2
-- name: gcr.io/cubeartisan/cubeartisan-jobs
-  newTag: v1.4.6.2
 - name: ghcr.io/cubeartisan/cubeartisan
   newTag: v1.4.6.3
 - name: ghcr.io/cubeartisan/cubeartisan-jobs
