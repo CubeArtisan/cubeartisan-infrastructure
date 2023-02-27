@@ -46,6 +46,7 @@ jobs:
         uses: google-github-actions/get-gke-credentials@main
         with:
           cluster_name: ${{ env.GKE_CLUSTER }}
+          project_id: ${{ env.PROJECT_ID }}
           location: ${{ env.GKE_ZONE }}
       - name: Set up Kustomize
         run: |-

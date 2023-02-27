@@ -30,7 +30,7 @@ metadata:
   namespace: mtgml
 spec:
   revisionHistoryLimit: 1
-  replicas: 1
+  replicas: 2
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -44,15 +44,13 @@ spec:
         service: mtgml-server
     spec:
       restartPolicy: Always
-      imagePullSecrets:
-        - name: github-docker
       serviceAccountName: log-and-trace
       containers:
         - name: mtgml-server
-          image: "ghcr.io/cubeartisan/mtgml:20220922-6-test4xla"
+          image: "ghcr.io/cubeartisan/mtgml:20230226"
           env:
             - name: MTGML_VERSION
-              value: "20220922-6-test4xla"
+              value: "20230226"
             - name: NAMESPACE
               valueFrom:
                 fieldRef:
@@ -76,10 +74,10 @@ spec:
           imagePullPolicy: IfNotPresent
           resources:
             limits:
-              memory: 3072Mi
+              memory: 4096Mi
             requests:
-              memory: 3072Mi
-              cpu: 1750m
+              memory: 4096Mi
+              cpu: 2800m
           livenessProbe:
             httpGet:
               path: /version
