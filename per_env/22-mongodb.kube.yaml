@@ -34,19 +34,19 @@ spec:
             - name: "mongodb-agent"
               resources:
                 limits:
-                  memory: 64Mi
+                  memory: 128Mi
                 requests:
-                  cpu: 35m
-                  memory: 64Mi
+                  cpu: 50m
+                  memory: 128Mi
             - name: "mongod"
               resources:
                 limits:
-                  memory: 960Mi
+                  memory: 1308Mi
                 requests:
                   # Set so it sums to 100 when combined with the other container.
-                  cpu: 90m
+                  cpu: 200m
                   # Set so it sums to 1024 when combined with the other container.
-                  memory: 960Mi
+                  memory: 1308Mi
 ---
 apiVersion: autoscaling.k8s.io/v1
 kind: VerticalPodAutoscaler

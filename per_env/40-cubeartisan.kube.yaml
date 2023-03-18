@@ -158,10 +158,10 @@ spec:
               name: http
           resources:
             limits:
-              memory: 2Gi
+              memory: 3Gi
             requests:
-              memory: 2Gi
-              cpu: 125m
+              memory: 3Gi
+              cpu: 250m
           livenessProbe:
             httpGet:
               path: /version
