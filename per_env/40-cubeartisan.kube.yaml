@@ -17,7 +17,7 @@ metadata:
 spec:
   ports:
     - port: 80
-      targetPort: 5000
+      targetPort: 80
       name: http
       protocol: TCP
   selector:
@@ -46,6 +46,8 @@ spec:
         name: cubeartisan
     spec:
       restartPolicy: Always
+    securityContext:
+      runAsNonRoot: true
       imagePullSecrets:
         - name: github-docker
       volumes:
@@ -123,7 +125,7 @@ spec:
             - name: NODE_ENV
               value: "production"
             - name: PORT
-              value: "5000"
+              value: "80"
             - name: SESSION
               valueFrom:
                 secretKeyRef:
@@ -154,7 +156,7 @@ spec:
             - name: TELEMETRY
               value: 'true'
           ports:
-            - containerPort: 5000
+            - containerPort: 80
               name: http
           resources:
             limits:

@@ -45,12 +45,14 @@ spec:
     spec:
       restartPolicy: Always
       serviceAccountName: log-and-trace
+      securityContext:
+        runAsNonRoot: true
       containers:
         - name: mtgml-server
-          image: "ghcr.io/cubeartisan/mtgml:20230306-1"
+          image: "ghcr.io/cubeartisan/mtgml:20230306-2"
           env:
             - name: MTGML_VERSION
-              value: "20230306-1"
+              value: "20230306-2"
             - name: NAMESPACE
               valueFrom:
                 fieldRef:
@@ -74,9 +76,9 @@ spec:
           imagePullPolicy: IfNotPresent
           resources:
             limits:
-              memory: 3Gi
+              memory: 3.5Gi
             requests:
-              memory: 3Gi
+              memory: 3.5Gi
               cpu: 2000m
           livenessProbe:
             httpGet:
