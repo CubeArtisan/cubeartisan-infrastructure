@@ -46,8 +46,8 @@ spec:
         name: cubeartisan
     spec:
       restartPolicy: Always
-    securityContext:
-      runAsNonRoot: true
+      # securityContext:
+      #   runAsNonRoot: true
       imagePullSecrets:
         - name: github-docker
       volumes:

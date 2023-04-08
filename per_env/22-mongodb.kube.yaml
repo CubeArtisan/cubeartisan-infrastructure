@@ -4,8 +4,9 @@ metadata:
   name: mongo
 spec:
   members: 3
+  arbiters: 0
   type: ReplicaSet
-  version: "6.0.5"
+  version: "6.0.5-ubuntu2204"
   security:
     authentication:
       modes: ["SCRAM"]
@@ -43,9 +44,9 @@ spec:
                 limits:
                   memory: 1308Mi
                 requests:
-                  # Set so it sums to 100 when combined with the other container.
+                  # Set so it sums to 250m when combined with the other container.
                   cpu: 200m
-                  # Set so it sums to 1024 when combined with the other container.
+                  # Set so it sums to 1.5Gi when combined with the other container.
                   memory: 1308Mi
 ---
 apiVersion: autoscaling.k8s.io/v1
