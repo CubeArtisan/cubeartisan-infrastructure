@@ -22,8 +22,8 @@ spec:
             name: cubeartisan-maintenance
         spec:
           serviceAccountName: update-cards
-          securityContext:
-            runAsNonRoot: true
+          # securityContext:
+          #   runAsNonRoot: true
           containers:
             - name: cubeartisan
               image: "ghcr.io/cubeartisan/cubeartisan-jobs:v1.1.5"
