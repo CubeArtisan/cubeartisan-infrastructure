@@ -9,13 +9,13 @@ resources:
 - 42-horizontal-auto-scaling.kube.yaml
 images:
 - name: ghcr.io/cubeartisan/cubeartisan
-  newTag: v1.4.6.5
+  newTag: v1.4.6.6
 - name: ghcr.io/cubeartisan/cubeartisan-jobs
-  newTag: v1.4.6.5
+  newTag: v1.4.6.6
 patchesStrategicMerge:
 - environment-override.yaml
-patchesJson6902:
 
+patchesJson6902:
 - path: ingress.patch.yaml
   target:
     group: networking.k8s.io
