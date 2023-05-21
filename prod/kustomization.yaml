@@ -9,9 +9,9 @@ resources:
 - 42-horizontal-auto-scaling.kube.yaml
 images:
 - name: ghcr.io/cubeartisan/cubeartisan
-  newTag: v1.4.6.6
+  newTag: v1.4.6.7
 - name: ghcr.io/cubeartisan/cubeartisan-jobs
-  newTag: v1.4.6.6
+  newTag: v1.4.6.7
 patchesStrategicMerge:
 - environment-override.yaml
 
